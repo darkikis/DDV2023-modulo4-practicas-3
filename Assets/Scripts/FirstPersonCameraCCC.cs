@@ -139,10 +139,21 @@ public class FirstPersonCameraCCC : MonoBehaviour
             Debug.Log("Recargando...[" + weaponRecharge + "] balas");
 
             ShooterCCC shooter = FindObjectOfType<ShooterCCC>();
-            shooter.maxBullet += weaponRecharge;
-            Debug.Log("Balas disponibles [" + shooter.maxBullet + "]");
 
-            weapCollision.SetActive(false);
+            if (shooter.bullets < shooter.maxBulletAllowed) {
+                int rechargeBullets = shooter.bullets + weaponRecharge;
+                if (rechargeBullets > shooter.maxBulletAllowed)
+                {
+                    rechargeBullets = shooter.maxBulletAllowed;
+                    shooter.bullets = rechargeBullets;
+                } else {
+                    shooter.bullets = rechargeBullets;
+                }
+                Debug.Log("Balas disponibles [" + shooter.bullets + "]");
+
+                weapCollision.SetActive(false);
+            }
+            
         }
         
 
